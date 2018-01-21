@@ -1,13 +1,13 @@
-# Load the NEI & SCC data frames.
+# Load the two data frames
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
-# Gather the subset of the NEI data which corresponds to vehicles
+# Gather the subset of NEI data which contains vehicles data
 vehicles <- grepl("vehicle", SCC$SCC.Level.Two, ignore.case=TRUE)
 vehiclesSCC <- SCC[vehicles,]$SCC
 vehiclesNEI <- NEI[NEI$SCC %in% vehiclesSCC,]
 
-# Subset the vehicles NEI data to Baltimore's fip
+# Subset the vehicles NEI data to Baltimore's fips
 baltimoreVehiclesNEI <- vehiclesNEI[vehiclesNEI$fips=="24510",]
 
 png("plot5.png",width=480,height=480,units="px",bg="transparent")

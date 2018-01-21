@@ -1,20 +1,20 @@
-# Load the NEI & SCC data frames.
+# Load the two frames
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
-# Gather the subset of the NEI data which corresponds to vehicles
+# Gather the subset of NEI data which has vehicle data
 vehicles <- grepl("vehicle", SCC$SCC.Level.Two, ignore.case=TRUE)
 vehiclesSCC <- SCC[vehicles,]$SCC
 vehiclesNEI <- NEI[NEI$SCC %in% vehiclesSCC,]
 
-# Subset the vehicles NEI data by each city's fip and add city name.
+# Subset the vehicles NEI data with each city's fips 
 vehiclesBaltimoreNEI <- vehiclesNEI[vehiclesNEI$fips=="24510",]
 vehiclesBaltimoreNEI$city <- "Baltimore City"
 
 vehiclesLANEI <- vehiclesNEI[vehiclesNEI$fips=="06037",]
 vehiclesLANEI$city <- "Los Angeles County"
 
-# Combine the two subsets with city name into one data frame
+# Combine the two subsets with city names into one big data frame
 bothNEI <- rbind(vehiclesBaltimoreNEI,vehiclesLANEI)
 
 png("plot6.png",width=480,height=480,units="px",bg="transparent")

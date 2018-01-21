@@ -1,8 +1,8 @@
-# Load the NEI & SCC data frames.
+# Load the two data frames
 NEI <- readRDS("summarySCC_PM25.rds")
 SCC <- readRDS("Source_Classification_Code.rds")
 
-# Subset coal combustion related NEI data
+# Subset coal combustion data with related NEI data
 combustionRelated <- grepl("comb", SCC$SCC.Level.One, ignore.case=TRUE)
 coalRelated <- grepl("coal", SCC$SCC.Level.Four, ignore.case=TRUE) 
 coalCombustion <- (combustionRelated & coalRelated)
